@@ -128,7 +128,7 @@ button,input,select{font:inherit}.app{min-height:100vh;display:grid;grid-templat
 <section class="content">
 <header class="topbar">
   <div class="title"><h1 id="pageTitle">Dashboard</h1><p>XXIV Memorial Giuliano Di Donato · 23 luglio – 12 agosto 2026</p></div>
-  <div class="top-actions"><span class="badge" id="saveState">Dati online</span><button class="btn ghost" onclick="loadPublicState(true)">AGGIORNA</button><button class="btn ghost" onclick="toggleFullscreen()">SCHERMO INTERO</button></div>
+  <div class="top-actions"><span class="badge" id="saveState">Dati online</span><button class="btn ghost" onclick="toggleFullscreen()">SCHERMO INTERO</button></div>
 </header>
 <main>
 <section class="page active" id="page-dashboard"></section>
@@ -227,12 +227,12 @@ async function loadPublicState(showToast=false){
  try{state=normalize(data.data);renderAll();const d=new Date(data.updated_at||state.updatedAt);if(badge)badge.textContent='Aggiornato '+d.toLocaleString('it-IT',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});if(showToast)toast('Dati aggiornati')}catch(e){if(badge)badge.textContent='Dati non validi'}
 }
 function saveProject(){const blob=new Blob([JSON.stringify(state)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='memorial_manager_2026.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-document.getElementById('openProject').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{state=normalize(JSON.parse(r.result));await persist('Progetto caricato')}catch(err){toast('File non valido o danneggiato.')}e.target.value=''};r.readAsText(f)};
+const openProjectInput=document.getElementById('openProject');if(openProjectInput)openProjectInput.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{state=normalize(JSON.parse(r.result));await persist('Progetto caricato')}catch(err){toast('File non valido o danneggiato.')}e.target.value=''};r.readAsText(f)};
 function importDraw(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{const d=JSON.parse(r.result);const n=normalize(d);state.teams=n.teams;await persist('Sorteggio importato')}catch{toast('Backup del sorteggio non valido.')}e.target.value=''};r.readAsText(f)}
 async function resetAll(){if(!confirm('Azzera squadre, calendario e risultati?'))return;state=baseState();await persist('Progetto azzerato')}
 function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen()}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
-(async()=>{renderAll();await loadPublicState();setInterval(()=>loadPublicState(false),60000)})();
+(async()=>{renderAll();await loadPublicState(false);setInterval(()=>loadPublicState(false),20000);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')loadPublicState(false)});})();
 </script>
 <script>
 (function(){
