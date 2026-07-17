@@ -115,6 +115,22 @@ button,input,select{font:inherit}.app{min-height:100vh;display:grid;grid-templat
   .page{padding-left:7px;padding-right:7px}
 }
 
+
+/* V4.3: fullscreen robusto e ingrandimento card */
+html.app-focus-mode,html.app-focus-mode body{overflow:hidden}
+html.app-focus-mode .app{position:fixed;inset:0;z-index:90;width:100vw;height:100dvh;overflow:auto;background:#020711}
+html.app-focus-mode .sidebar{height:100dvh}
+.image-lightbox{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.94);backdrop-filter:blur(8px)}
+.image-lightbox.show{display:flex}
+.image-lightbox img{display:block;max-width:min(94vw,1100px);max-height:90dvh;object-fit:contain;border-radius:14px;box-shadow:0 24px 90px rgba(0,0,0,.75);border:1px solid rgba(242,193,78,.38)}
+.image-lightbox-close{position:fixed;top:max(12px,env(safe-area-inset-top));right:14px;z-index:201;border:1px solid rgba(255,255,255,.22);border-radius:999px;width:46px;height:46px;background:rgba(8,21,43,.94);color:#fff;font-size:25px;font-weight:900;cursor:pointer}
+.mini-thumb img,.group-team img,.poster img,.big-thumb img{cursor:zoom-in}
+@media(max-width:800px){
+ html.app-focus-mode .app{display:block}
+ html.app-focus-mode .sidebar{height:auto;position:relative}
+ .image-lightbox{padding:8px}
+ .image-lightbox img{max-width:98vw;max-height:88dvh;border-radius:10px}
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>.side-actions{display:none!important}.readonly-note{color:#ffe49a;font-weight:900}.match-tile{cursor:default}.match-tile:hover{border-color:rgba(255,255,255,.1)}</style>
@@ -146,6 +162,7 @@ button,input,select{font:inherit}.app{min-height:100vh;display:grid;grid-templat
 <div class="modal" id="matchModal"><div class="modal-box"><div class="modal-head"><h2 id="matchModalTitle">Partita</h2><button class="btn" onclick="closeMatchModal()">CHIUDI</button></div><div id="matchModalBody"></div></div></div>
 <div class="modal" id="liveModal"><div class="modal-box" style="width:min(1100px,96vw)"><div class="modal-head"><h2>Segnapunti</h2><button class="btn" onclick="closeLiveModal()">CHIUDI</button></div><div id="liveModalBody"></div></div></div>
 <div class="toast" id="toast"></div>
+<div class="image-lightbox" id="imageLightbox" aria-hidden="true"><button class="image-lightbox-close" type="button" aria-label="Chiudi" onclick="closeImageLightbox()">×</button><img id="imageLightboxImg" alt="Card squadra ingrandita"></div>
 <script>
 const SUPABASE_URL='https://ohymvreppuatepssyzku.supabase.co';
 const SUPABASE_KEY='sb_publishable_e4jn19h7nQqu1ru6URis-w_uQxwNNPg';
@@ -230,7 +247,53 @@ function saveProject(){const blob=new Blob([JSON.stringify(state)],{type:'applic
 const openProjectInput=document.getElementById('openProject');if(openProjectInput)openProjectInput.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{state=normalize(JSON.parse(r.result));await persist('Progetto caricato')}catch(err){toast('File non valido o danneggiato.')}e.target.value=''};r.readAsText(f)};
 function importDraw(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{const d=JSON.parse(r.result);const n=normalize(d);state.teams=n.teams;await persist('Sorteggio importato')}catch{toast('Backup del sorteggio non valido.')}e.target.value=''};r.readAsText(f)}
 async function resetAll(){if(!confirm('Azzera squadre, calendario e risultati?'))return;state=baseState();await persist('Progetto azzerato')}
-function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen()}
+async function toggleFullscreen(){
+ const root=document.documentElement;
+ const active=document.fullscreenElement||document.webkitFullscreenElement;
+ try{
+  if(active){
+   if(document.exitFullscreen)await document.exitFullscreen();
+   else if(document.webkitExitFullscreen)document.webkitExitFullscreen();
+   root.classList.remove('app-focus-mode');
+   updateFullscreenButton(false);
+   return;
+  }
+  const request=root.requestFullscreen||root.webkitRequestFullscreen;
+  if(request){
+   await request.call(root);
+   updateFullscreenButton(true);
+  }else{
+   root.classList.toggle('app-focus-mode');
+   updateFullscreenButton(root.classList.contains('app-focus-mode'));
+  }
+ }catch(e){
+  root.classList.toggle('app-focus-mode');
+  updateFullscreenButton(root.classList.contains('app-focus-mode'));
+ }
+}
+function updateFullscreenButton(active){
+ const button=document.querySelector('.top-actions button[onclick="toggleFullscreen()"]');
+ if(button)button.textContent=active?'ESCI SCHERMO INTERO':'SCHERMO INTERO';
+}
+function openImageLightbox(src,alt='Card squadra'){
+ if(!src)return;
+ const box=document.getElementById('imageLightbox'),img=document.getElementById('imageLightboxImg');
+ img.src=src;img.alt=alt||'Card squadra';box.classList.add('show');box.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+}
+function closeImageLightbox(){
+ const box=document.getElementById('imageLightbox'),img=document.getElementById('imageLightboxImg');
+ box.classList.remove('show');box.setAttribute('aria-hidden','true');img.removeAttribute('src');document.body.style.overflow='';
+}
+document.addEventListener('click',function(e){
+ const img=e.target.closest('.mini-thumb img,.group-team img,.poster img,.big-thumb img');
+ if(img){e.preventDefault();e.stopPropagation();openImageLightbox(img.currentSrc||img.src,img.alt);return}
+ if(e.target.id==='imageLightbox')closeImageLightbox();
+});
+document.addEventListener('keydown',function(e){
+ if(e.key==='Escape'&&document.getElementById('imageLightbox').classList.contains('show'))closeImageLightbox();
+});
+document.addEventListener('fullscreenchange',function(){updateFullscreenButton(!!document.fullscreenElement)});
+document.addEventListener('webkitfullscreenchange',function(){updateFullscreenButton(!!document.webkitFullscreenElement)});
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
 (async()=>{renderAll();await loadPublicState(false);setInterval(()=>loadPublicState(false),20000);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')loadPublicState(false)});})();
 </script>
