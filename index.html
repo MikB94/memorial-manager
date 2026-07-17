@@ -11,50 +11,108 @@ button,input,select{font:inherit}.app{min-height:100vh;display:grid;grid-templat
 @media(max-width:1200px){.app{grid-template-columns:190px 1fr}.group-board{grid-template-columns:repeat(2,1fr)}.matches{grid-template-columns:repeat(2,1fr)}.grid.four{grid-template-columns:repeat(2,1fr)}.bracket{gap:12px}.social-card{transform:scale(.65)}}
 @media(max-width:800px){.app{display:block}.sidebar{position:relative;height:auto}.nav{grid-template-columns:repeat(2,1fr)}.content{width:100%}.topbar{position:relative}.grid.two,.grid.three,.grid.four,.standings-grid{grid-template-columns:1fr}.group-board{grid-template-columns:1fr}.matches{grid-template-columns:1fr}.live-scoreboard{grid-template-columns:1fr}.bracket{grid-template-columns:1fr}.social-card{transform:scale(.42)}}
 
-/* V3: responsive mobile isolato. Sopra 800px il layout originale resta invariato. */
+/* V4 MOBILE: tutte le regole qui sotto si attivano solo su telefono/tablet.
+   Il layout desktop sopra 801px resta identico alla versione verificata. */
 @media (max-width:800px){
-  html,body{max-width:100%;overflow-x:hidden}
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  body{background-attachment:scroll}
   .app{display:block;min-height:100vh}
-  .sidebar{position:relative;top:auto;width:100%;height:auto;padding:8px 10px 10px;border-right:0;border-bottom:1px solid rgba(242,193,78,.25)}
-  .brand{height:72px;margin-bottom:8px}
-  .brand img{width:150px;height:68px;transform:none}
-  .nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+
+  /* Testata e navigazione compatte */
+  .sidebar{position:relative;top:auto;width:100%;height:auto;padding:7px 9px 9px;border-right:0;border-bottom:1px solid rgba(242,193,78,.25)}
+  .brand{height:62px;margin:0 0 7px;border-bottom:1px solid var(--line)}
+  .brand img{width:142px;height:58px;transform:none;object-fit:contain}
+  .nav{display:flex;grid-template-columns:none;gap:6px;overflow-x:auto;overscroll-behavior-x:contain;padding:0 0 3px;scrollbar-width:none}
   .nav::-webkit-scrollbar{display:none}
-  .nav button{flex:0 0 auto;white-space:nowrap;padding:9px 11px;border-radius:10px;font-size:13px}
-  .side-actions{display:none}
+  .nav button{flex:0 0 auto;min-height:38px;white-space:nowrap;padding:9px 11px;border-radius:10px;font-size:12px;box-shadow:none}
+  .nav button.active{box-shadow:inset 0 -3px var(--gold)}
+  .side-actions{display:none!important}
+
   .content{width:100%;min-width:0}
-  .topbar{position:relative;top:auto;height:auto;min-height:74px;padding:10px 12px;gap:10px;align-items:flex-start;flex-wrap:wrap}
-  .title{min-width:0;flex:1 1 190px}
-  .title h1{font-size:20px;line-height:1.15;letter-spacing:.025em}
-  .title p{font-size:11px;line-height:1.3}
-  .top-actions{width:100%;gap:6px;overflow-x:auto;padding-bottom:2px}
-  .top-actions .badge,.top-actions .btn{flex:0 0 auto;padding:8px 10px;font-size:11px}
-  .page{padding:12px 10px 26px}
-  .section-head{align-items:flex-start;flex-direction:column;margin-bottom:10px}
-  .section-head h2{font-size:21px}
+  .topbar{position:relative;top:auto;height:auto;min-height:0;padding:10px 11px;gap:8px;align-items:flex-start;flex-wrap:wrap}
+  .title{width:100%;min-width:0}
+  .title h1{font-size:20px;line-height:1.15;letter-spacing:.02em}
+  .title p{font-size:10px;line-height:1.35;margin-top:4px}
+  .top-actions{display:flex;width:100%;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+  .top-actions::-webkit-scrollbar{display:none}
+  .top-actions .badge,.top-actions .btn{flex:0 0 auto;min-height:36px;padding:8px 10px;font-size:10px;white-space:nowrap}
+  .top-actions .btn:last-child{display:none}
+
+  /* Contenuti */
+  .page{padding:11px 9px 28px}
+  .section-head{align-items:flex-start;flex-direction:column;margin-bottom:10px;gap:7px}
+  .section-head h2{font-size:20px;line-height:1.2}
+  .row{width:100%;gap:7px}
+  .row>.field{min-width:0;flex:1 1 145px}
+  .field input,.field select{width:100%;min-height:40px;padding:9px 10px}
+  .grid{gap:9px}
   .grid.two,.grid.three,.grid.four,.standings-grid,.group-board,.bracket,.live-scoreboard{grid-template-columns:1fr}
-  .grid{gap:10px}
-  .card{padding:12px;border-radius:14px}
-  .kpi{min-height:92px}
-  .kpi strong{font-size:29px}
-  .matches{grid-template-columns:1fr;padding:8px}
-  .night-head{padding:10px 11px;gap:8px;font-size:13px}
-  .match-tile{min-height:92px;padding:9px}
-  .table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  table{min-width:650px}
-  th,td{padding:9px 8px;font-size:12px}
-  .modal{padding:8px}
-  .modal-box{width:100%;max-height:94vh;padding:12px;border-radius:15px}
-  .set-grid{grid-template-columns:1fr 82px 82px}
-  .live-side .big-thumb{height:250px}
-  .graphic-stage{min-height:430px;height:430px;padding:8px;overflow:hidden;align-items:flex-start}
-  .social-card{flex:0 0 auto;transform:scale(.30);transform-origin:top center;margin-bottom:-945px}
-  .graphics-toolbar{display:grid;grid-template-columns:1fr;gap:7px}
-  .graphics-toolbar select,.graphics-toolbar button{width:100%}
+  .grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .card{min-width:0;padding:11px;border-radius:14px}
+  .card h2,.card h3{font-size:17px;margin-bottom:9px}
+  .kpi{min-height:88px}
+  .kpi strong{font-size:27px}
+  .kpi span{font-size:11px}
+
+  /* Gironi, calendario e partite */
+  .group-board{gap:9px}
+  .group{padding:10px;border-radius:13px}
+  .group-team{min-width:0;padding:7px}
+  .group-team>*:last-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .night{border-radius:13px}
+  .night-head{padding:10px 11px;gap:8px;font-size:12px;flex-wrap:wrap}
+  .matches{grid-template-columns:1fr;padding:7px;gap:7px}
+  .match-tile{min-height:88px;padding:9px;border-radius:11px}
+  .match-tile .meta{font-size:10px}
+  .vs{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+  .vs .team{font-size:11px;white-space:normal;line-height:1.2}
+  .score{font-size:17px}
+
+  /* Tabelle: restano complete e scorrono soltanto dentro il loro riquadro */
+  .table-wrap{display:block;width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  table{width:max-content;min-width:680px}
+  th,td{padding:8px 7px;font-size:11px}
+  .mini-thumb{width:29px;height:41px}
+  .mini-team{gap:7px}
+
+  /* Classifiche: tutte le colonne visibili sul telefono */
+  #page-standings .table-wrap{overflow-x:hidden}
+  #page-standings table{width:100%;min-width:0;table-layout:fixed}
+  #page-standings th,#page-standings td{padding:7px 2px;font-size:9px;text-align:center;overflow:hidden;text-overflow:ellipsis}
+  #page-standings th:nth-child(1),#page-standings td:nth-child(1){width:6%}
+  #page-standings th:nth-child(2),#page-standings td:nth-child(2){width:34%;text-align:left}
+  #page-standings th:nth-child(n+3),#page-standings td:nth-child(n+3){width:8.57%}
+  #page-standings .mini-thumb{display:none}
+  #page-standings .mini-team{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:9px}
+
+  /* Live, tabellone e finestre */
+  .modal{padding:7px}
+  .modal-box{width:100%;max-height:95vh;padding:11px;border-radius:14px}
+  .modal-head{gap:8px}
+  .modal-head h2{font-size:19px}
+  .set-grid{grid-template-columns:minmax(0,1fr) 72px 72px;gap:6px}
+  .live-scoreboard{gap:11px}
+  .live-side .big-thumb{height:230px;max-width:170px}
+  .live-side h3{font-size:20px}
+  .points strong{font-size:34px}
+  .center-score .sets{font-size:40px}
+  .bracket{gap:13px}
+  .round{gap:9px}
+  .bracket-row{padding:9px;font-size:12px}
+
+  /* Grafiche social: anteprima intera dentro lo schermo */
+  .graphics-toolbar{display:grid;grid-template-columns:1fr;gap:7px;margin-bottom:9px}
+  .graphics-toolbar select,.graphics-toolbar button{width:100%;min-height:42px}
+  .graphic-stage{width:100%;min-height:0;height:auto;padding:8px;border-radius:14px;overflow:hidden;align-items:flex-start;justify-content:center}
+  .graphic-stage .social-card{flex:0 0 auto;transform:scale(var(--mobile-social-scale,.30))!important;transform-origin:top center;margin-bottom:calc(-1350px * (1 - var(--mobile-social-scale,.30)))}
+
+  .toast{left:10px;right:10px;bottom:10px;text-align:center}
 }
-@media (max-width:420px){
-  .social-card{transform:scale(.27);margin-bottom:-985px}
-  .graphic-stage{height:390px;min-height:390px}
+@media (max-width:380px){
+  .grid.four{grid-template-columns:1fr}
+  .brand{height:57px}.brand img{height:53px;width:132px}
+  .nav button{font-size:11px;padding:8px 9px}
+  .page{padding-left:7px;padding-right:7px}
 }
 
 </style>
@@ -175,6 +233,23 @@ async function resetAll(){if(!confirm('Azzera squadre, calendario e risultati?')
 function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen()}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
 (async()=>{renderAll();await loadPublicState();setInterval(()=>loadPublicState(false),60000)})();
+</script>
+<script>
+(function(){
+  function fitMobileSocialCards(){
+    if(window.innerWidth>800) return;
+    document.querySelectorAll('.graphic-stage').forEach(function(stage){
+      var available=Math.max(250,stage.clientWidth-16);
+      var scale=Math.min(0.42,available/1080);
+      stage.style.setProperty('--mobile-social-scale',String(scale));
+    });
+  }
+  window.addEventListener('resize',fitMobileSocialCards,{passive:true});
+  document.addEventListener('click',function(){setTimeout(fitMobileSocialCards,50)});
+  new MutationObserver(function(){fitMobileSocialCards()}).observe(document.body,{childList:true,subtree:true});
+  window.addEventListener('load',fitMobileSocialCards);
+  setTimeout(fitMobileSocialCards,250);
+})();
 </script>
 </body>
 </html>
