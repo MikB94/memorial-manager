@@ -383,12 +383,54 @@ function openReadOnlyMatch(id){
  document.getElementById('matchModal').classList.add('show')
 }
 function closeMatchModal(){document.getElementById('matchModal').classList.remove('show')}
-async function loadPublicState(showToast=false){
+let publicUpdatedAt=null,publicImages={};
+function mergePublicImages(data){
+ const normalized=normalize(data);
+ normalized.teams=normalized.teams.map(t=>({...t,img:t.img||publicImages[t.id]||''}));
+ return normalized;
+}
+async function readPublicCache(key){
+ try{const db=await openDB();return await new Promise((res,rej)=>{const r=db.transaction(STORE,'readonly').objectStore(STORE).get(key);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}catch{return null}
+}
+async function writePublicCache(key,value){
+ try{const db=await openDB();return await new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(value,key);tx.oncomplete=res;tx.onerror=()=>rej(tx.error)})}catch{}
+}
+async function loadLegacyImages(){
+ const cached=await readPublicCache('public_images_v1');
+ if(cached&&typeof cached==='object')publicImages=cached;
+ if(Object.keys(publicImages).length)return;
+ const {data,error}=await supabaseClient.from('tournament_state').select('data').eq('id','main').maybeSingle();
+ if(error||!data?.data)return;
+ try{
+  const legacy=normalize(data.data);
+  publicImages=Object.fromEntries(legacy.teams.filter(t=>t.img).map(t=>[t.id,t.img]));
+  await writePublicCache('public_images_v1',publicImages);
+ }catch{}
+}
+async function fetchLightState(showToast=false){
  const badge=document.getElementById('saveState');if(badge)badge.textContent='Aggiornamento…';
+ const {data,error}=await supabaseClient.from('tournament_state').select('data,updated_at').eq('id','live_state').maybeSingle();
+ if(error){if(badge)badge.textContent='Errore dati';if(showToast)toast('Errore caricamento: '+error.message);return false}
+ if(!data)return false;
+ try{
+  state=mergePublicImages(data.data);publicUpdatedAt=data.updated_at||state.updatedAt||null;renderAll();
+  const d=new Date(publicUpdatedAt);if(badge)badge.textContent='Aggiornato '+d.toLocaleString('it-IT',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+  if(showToast)toast('Dati aggiornati');return true
+ }catch(e){if(badge)badge.textContent='Dati non validi';return false}
+}
+async function loadPublicState(showToast=false){
+ await loadLegacyImages();
+ if(await fetchLightState(showToast))return;
+ const badge=document.getElementById('saveState');
  const {data,error}=await supabaseClient.from('tournament_state').select('data,updated_at').eq('id','main').maybeSingle();
  if(error){if(badge)badge.textContent='Errore dati';if(showToast)toast('Errore caricamento: '+error.message);return}
  if(!data){if(badge)badge.textContent='Nessun dato pubblicato';if(showToast)toast('Nessun aggiornamento ancora pubblicato');return}
- try{state=normalize(data.data);renderAll();const d=new Date(data.updated_at||state.updatedAt);if(badge)badge.textContent='Aggiornato '+d.toLocaleString('it-IT',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});if(showToast)toast('Dati aggiornati')}catch(e){if(badge)badge.textContent='Dati non validi'}
+ try{state=normalize(data.data);publicUpdatedAt=data.updated_at||state.updatedAt||null;renderAll();const d=new Date(publicUpdatedAt);if(badge)badge.textContent='Aggiornato '+d.toLocaleString('it-IT',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});if(showToast)toast('Dati aggiornati')}catch(e){if(badge)badge.textContent='Dati non validi'}
+}
+async function checkPublicUpdate(){
+ const {data,error}=await supabaseClient.from('tournament_state').select('updated_at').eq('id','live_state').maybeSingle();
+ if(error||!data)return;
+ if(!publicUpdatedAt||data.updated_at!==publicUpdatedAt)await fetchLightState(false);
 }
 function saveProject(){const blob=new Blob([JSON.stringify(state)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='memorial_manager_2026.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 const openProjectInput=document.getElementById('openProject');if(openProjectInput)openProjectInput.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{state=normalize(JSON.parse(r.result));await persist('Progetto caricato')}catch(err){toast('File non valido o danneggiato.')}e.target.value=''};r.readAsText(f)};
@@ -442,7 +484,7 @@ document.addEventListener('keydown',function(e){
 document.addEventListener('fullscreenchange',function(){updateFullscreenButton(!!document.fullscreenElement)});
 document.addEventListener('webkitfullscreenchange',function(){updateFullscreenButton(!!document.webkitFullscreenElement)});
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
-(async()=>{renderAll();await loadPublicState(false);setInterval(()=>loadPublicState(false),20000);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')loadPublicState(false)});})();
+(async()=>{renderAll();await loadPublicState(false);setInterval(checkPublicUpdate,60000);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')checkPublicUpdate()});})();
 </script>
 <script>
 (function(){
