@@ -273,6 +273,95 @@ body{background:radial-gradient(circle at 18% -4%,rgba(45,103,199,.20),transpare
 @media(max-width:390px){.nav button{min-width:78px;flex-basis:78px}.title h1{font-size:19px}.badge{max-width:118px;overflow:hidden;text-overflow:ellipsis}}
 </style>
 
+
+<style>
+/* V6 Premium UX — sola presentazione. Nessuna nuova richiesta a Supabase. */
+:root{
+  --gold:#f2c14e;--gold-2:#ffd978;--ink:#020712;--navy:#07152d;--navy-2:#0c2347;
+  --stroke:rgba(242,193,78,.22);--stroke-soft:rgba(255,255,255,.08);
+}
+body{background:
+  radial-gradient(circle at 50% -18%,rgba(35,93,184,.20),transparent 36%),
+  linear-gradient(180deg,#040c1c 0%,#01050d 78%);}
+.topbar{border-bottom:1px solid rgba(242,193,78,.17);background:rgba(2,8,20,.88);box-shadow:0 12px 35px rgba(0,0,0,.20)}
+.title h1{font-weight:1000;letter-spacing:.025em}.title p{color:#95a5bf}
+.badge{border-radius:999px;background:linear-gradient(180deg,rgba(242,193,78,.14),rgba(242,193,78,.055));box-shadow:inset 0 0 0 1px rgba(255,255,255,.025)}
+.page{max-width:1500px;margin:0 auto}
+.section-head h2{font-weight:1000;letter-spacing:-.015em}
+.card,.night,.group,.table-wrap{box-shadow:0 18px 45px rgba(0,0,0,.24)}
+.card{background:linear-gradient(155deg,rgba(13,31,61,.96),rgba(4,11,25,.985));border-color:rgba(255,255,255,.085)}
+
+/* Home: più identitaria e meno “pannelli generici” */
+.memorial-cover{border-color:rgba(242,193,78,.34);background:
+  radial-gradient(circle at 76% 12%,rgba(242,193,78,.20),transparent 27%),
+  radial-gradient(circle at 5% 88%,rgba(45,112,228,.18),transparent 35%),
+  linear-gradient(145deg,#102a55 0%,#07162f 47%,#020711 100%);}
+.cover-title{color:#fff;text-shadow:0 10px 35px rgba(0,0,0,.55)}
+.cover-title em{color:var(--gold-2);font-style:normal}
+.cover-motto{color:#dce6f7}
+.next-match-premium{border-color:rgba(242,193,78,.27);background:
+  radial-gradient(circle at 92% 10%,rgba(242,193,78,.13),transparent 28%),
+  linear-gradient(160deg,rgba(12,33,68,.98),rgba(4,12,27,.99));}
+.next-versus{padding:18px 0 5px}
+.next-team{letter-spacing:.015em}
+.vs-orb{box-shadow:0 12px 28px rgba(242,193,78,.22),inset 0 1px rgba(255,255,255,.45)}
+.quick-panel{border-color:rgba(255,255,255,.08);background:linear-gradient(160deg,rgba(10,25,51,.96),rgba(4,11,25,.985))}
+.panel-label{color:#8fa0bc}
+.quick-link{border-color:rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));box-shadow:inset 0 1px rgba(255,255,255,.035)}
+.quick-link:hover{background:linear-gradient(180deg,rgba(242,193,78,.11),rgba(242,193,78,.035))}
+.home-stat{border-color:rgba(255,255,255,.085);background:linear-gradient(155deg,rgba(14,35,70,.98),rgba(5,13,29,.99));box-shadow:0 14px 34px rgba(0,0,0,.25)}
+.home-stat strong{color:var(--gold-2)}
+.tourney-progress{background:linear-gradient(155deg,rgba(9,23,47,.98),rgba(3,10,22,.99));border:1px solid rgba(255,255,255,.075);box-shadow:0 14px 34px rgba(0,0,0,.22)}
+
+/* Calendario: gerarchia più sportiva */
+.calendar-grid{gap:16px}
+.night{border-color:rgba(255,255,255,.085);background:linear-gradient(180deg,rgba(7,20,43,.98),rgba(3,10,23,.99));overflow:hidden}
+.night-head{padding:14px 17px;background:linear-gradient(90deg,rgba(242,193,78,.19),rgba(242,193,78,.035) 45%,transparent);border-bottom:1px solid rgba(242,193,78,.14);letter-spacing:.01em}
+.matches{gap:10px;padding:12px}
+.match-tile{position:relative;overflow:hidden;min-height:118px;padding:13px 14px;border-color:rgba(255,255,255,.085);background:linear-gradient(155deg,rgba(13,31,61,.96),rgba(5,13,29,.98));box-shadow:inset 0 1px rgba(255,255,255,.025)}
+.match-tile:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--gold),rgba(242,193,78,.12))}
+.match-tile .meta{color:#8fa4c4;font-weight:750;letter-spacing:.015em}
+.vs .team{font-weight:1000;line-height:1.16;letter-spacing:.01em}
+.score{color:var(--gold-2)}
+.status{color:#8393ad;font-weight:800}
+
+/* Gironi e classifiche */
+.group{border-color:color-mix(in srgb,var(--accent) 48%,transparent);background:linear-gradient(165deg,color-mix(in srgb,var(--accent) 12%,#0b1c39),#050d1d 72%)}
+.group-team{border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.028)}
+.table-wrap{border-color:rgba(255,255,255,.085);background:#050d1d}
+th{background:linear-gradient(180deg,rgba(242,193,78,.15),rgba(242,193,78,.07));color:#ffe39a}
+tbody tr:hover td{background:rgba(255,255,255,.025)}
+
+@media(max-width:800px){
+ body{padding-bottom:88px}
+ .page{padding:15px 12px 30px}
+ .topbar{padding:11px 13px;min-height:70px}
+ .title h1{font-size:22px}.title p{font-size:10px}
+ .badge{font-size:9px;padding:7px 9px;max-width:140px}
+
+ /* Barra inferiore: etichette corte, niente sovrapposizioni */
+ .sidebar{height:82px;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:rgba(2,7,18,.97)}
+ .nav{gap:4px;overflow-x:auto;scroll-snap-type:x proximity;padding:0 2px}
+ .nav button{flex:0 0 72px;min-width:72px;height:64px;padding:7px 4px 6px;border-radius:14px;font-size:9px!important;line-height:1.05;white-space:normal;word-break:normal;letter-spacing:.01em;scroll-snap-align:start;overflow:hidden}
+ .nav button.active{box-shadow:inset 0 3px var(--gold),0 7px 18px rgba(0,0,0,.28);background:linear-gradient(180deg,rgba(242,193,78,.18),rgba(242,193,78,.045))}
+
+ .memorial-home{gap:13px}
+ .memorial-cover{padding:19px 16px;border-radius:23px}
+ .cover-title{font-size:39px}.cover-logo-wrap{min-height:138px}.cover-logo{height:145px}
+ .next-match-premium,.quick-panel{border-radius:21px}
+ .quick-panel{padding:17px}
+ .quick-links{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+ .quick-link{min-height:92px;padding:11px 6px;border-radius:16px;font-size:11px}
+ .home-stats{gap:10px}.home-stat{min-height:118px;border-radius:20px}.home-stat strong{font-size:33px}
+ .night{border-radius:18px}.night-head{padding:13px 14px}.matches{padding:9px;gap:9px}.match-tile{min-height:112px;padding:13px 12px;border-radius:14px}
+ .match-tile .meta{font-size:10px}.vs .team{font-size:13px}.status{font-size:9px}
+}
+@media(max-width:380px){
+ .nav button{flex-basis:68px;min-width:68px;font-size:8.5px!important}
+ .quick-link{font-size:10px}.cover-title{font-size:35px}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -535,5 +624,23 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
   setTimeout(fitMobileSocialCards,250);
 })();
 </script>
+
+<script>
+/* Etichette mobile compatte: solo interfaccia, nessuna logica dati */
+(function(){
+  const compact=['HOME','SQUADRE','CALENDARIO','RISULTATI','CLASSIFICA','FINALI','GRAFICHE'];
+  function applyCompactNav(){
+    const buttons=document.querySelectorAll('.nav button');
+    buttons.forEach((b,i)=>{
+      if(!b.dataset.fullLabel) b.dataset.fullLabel=b.textContent.trim();
+      b.textContent=window.matchMedia('(max-width:800px)').matches?(compact[i]||b.dataset.fullLabel):b.dataset.fullLabel;
+    });
+  }
+  document.addEventListener('DOMContentLoaded',applyCompactNav);
+  window.addEventListener('resize',applyCompactNav,{passive:true});
+  setTimeout(applyCompactNav,0);
+})();
+</script>
+
 </body>
 </html>
