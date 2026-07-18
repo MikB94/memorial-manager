@@ -390,6 +390,16 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
 }
 </style>
 
+
+<style id="v12-small-fixes">
+/* V12: rifiniture calendario mobile e interfaccia pubblica */
+#saveState{display:none!important}
+@media(max-width:800px){
+  .night-head{position:static!important;top:auto!important;z-index:auto!important}
+  .night{overflow:hidden}
+  .matches{padding-top:10px!important}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -844,6 +854,76 @@ body{font-family:var(--body)}
   if(window.startEventCountdown)startEventCountdown();
  };
  setTimeout(()=>{if(window.currentPage==='dashboard'||!window.currentPage)window.renderDashboard()},120);
+})();
+</script>
+
+<style id="v13-final-polish">
+/* V13: rifiniture UX senza nuove richieste a Supabase */
+.topbar{display:none!important}
+.content{min-width:0}
+.v10-mast-copy .v13-meta{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:14px}
+.v10-mast-copy .v13-meta span{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid rgba(242,193,78,.22);border-radius:999px;background:rgba(242,193,78,.055);color:#d9c887;font:800 11px/1 Segoe UI,Arial,sans-serif;letter-spacing:.04em;text-transform:none;white-space:nowrap}
+.v10-event-access{grid-column:1/-1;min-height:92px;background:radial-gradient(circle at 92% 10%,rgba(255,120,180,.14),transparent 32%),linear-gradient(145deg,rgba(17,38,74,.98),rgba(6,15,31,.98))}
+.v10-event-access svg{stroke:#ff9dcb!important}
+.night.is-today{border-color:rgba(54,199,122,.65);box-shadow:0 0 0 1px rgba(54,199,122,.18),0 18px 44px rgba(0,0,0,.24)}
+.night.is-next{border-color:rgba(242,193,78,.55);box-shadow:0 0 0 1px rgba(242,193,78,.12),0 18px 44px rgba(0,0,0,.24)}
+.night-badge{display:inline-flex;align-items:center;padding:5px 8px;border-radius:999px;font-size:10px!important;font-weight:950;letter-spacing:.08em!important}
+.night-badge.today{background:rgba(54,199,122,.13);color:#70e9a8!important;border:1px solid rgba(54,199,122,.35)}
+.night-badge.next{background:rgba(242,193,78,.11);color:#ffe49a!important;border:1px solid rgba(242,193,78,.32)}
+.match-tile.is-done{min-height:96px;opacity:.86;background:rgba(255,255,255,.025)}
+.match-tile.is-done .status{margin-top:7px}
+.match-tile.is-done .meta{margin-bottom:5px}
+@media(max-width:800px){
+ .v10-mast-copy .v13-meta{justify-content:flex-start;margin-top:10px;gap:6px}
+ .v10-mast-copy .v13-meta span{padding:6px 8px;font-size:10px}
+ .night-head{position:static!important;top:auto!important;z-index:auto!important;margin:0!important}
+ .night{scroll-margin-top:14px}
+ .night-head+ .matches{padding-top:10px!important}
+ .match-tile.is-done{min-height:94px;padding-top:10px;padding-bottom:10px}
+}
+</style>
+<script id="v13-final-polish-js">
+(function(){
+ const originalDashboard=window.renderDashboard;
+ window.renderDashboard=function(){
+   originalDashboard();
+   const mast=document.querySelector('.v10-mast-copy');
+   if(mast && !mast.querySelector('.v13-meta')){
+     mast.insertAdjacentHTML('beforeend','<div class="v13-meta"><span>23 luglio — 13 agosto 2026</span><span>Poggio Moiano</span></div>');
+   }
+   const links=document.querySelector('.v10-links');
+   const eventsSection=[...document.querySelectorAll('#page-dashboard section')].find(x=>x.textContent.includes('I nostri eventi'));
+   if(eventsSection) eventsSection.id='eventsSection';
+   if(links && !links.querySelector('.v10-event-access')){
+     links.insertAdjacentHTML('beforeend',`<button class="v10-link v10-event-access" onclick="document.getElementById('eventsSection')?.scrollIntoView({behavior:'smooth',block:'start'})"><span><strong>I nostri eventi</strong><small>Date, countdown e programma completo</small></span><b class="v10-arrow">›</b></button>`);
+   }
+ };
+ function localDay(d){return new Date(d+'T12:00:00');}
+ window.renderCalendar=function(){
+   const today=new Date(); today.setHours(0,0,0,0);
+   const nights=nightsData();
+   const future=nights.filter(n=>localDay(n.date)>=today && n.matches.length).sort((a,b)=>a.date.localeCompare(b.date));
+   const nextDate=future[0]?.date||null;
+   const html=nights.map(n=>{
+     const nd=localDay(n.date); nd.setHours(0,0,0,0);
+     const isToday=nd.getTime()===today.getTime();
+     const isNext=!isToday && n.date===nextDate;
+     const badge=isToday?'<span class="night-badge today">OGGI</span>':isNext?'<span class="night-badge next">PROSSIMA</span>':n.reserve?'<span>SERATA CUSCINETTO</span>':'';
+     const matches=n.matches.length?n.matches.map(m=>{
+       let tile=matchTile(m);
+       tile=tile.replace('class="match-tile"',`class="match-tile ${m.status==='done'?'is-done':''}"`);
+       return tile;
+     }).join(''):`<div class="empty" style="padding:12px">${n.reserve?'Disponibile per recuperi o rinvii':'Nessuna partita programmata'}</div>`;
+     return `<section class="night ${n.reserve?'reserve':''} ${isToday?'is-today':''} ${isNext?'is-next':''}"><div class="night-head"><span>${fmtDate(n.date)}</span>${badge}</div><div class="matches">${matches}</div></section>`;
+   }).join('');
+   document.getElementById('page-calendar').innerHTML=`<div class="section-head"><div><span class="section-kicker">Tutte le giornate</span><h2>Calendario</h2><div class="section-sub">Orari, gironi e dettagli di ogni partita.</div></div></div><div class="calendar-grid">${html}</div>`;
+ };
+ const originalShowPage=window.showPage;
+ window.showPage=function(id){
+   originalShowPage(id);
+   if(id==='calendar') setTimeout(()=>document.querySelector('#page-calendar .night.is-today, #page-calendar .night.is-next')?.scrollIntoView({behavior:'smooth',block:'start'}),120);
+ };
+ setTimeout(()=>{if(window.currentPage==='dashboard'||!window.currentPage)window.renderDashboard()},150);
 })();
 </script>
 
