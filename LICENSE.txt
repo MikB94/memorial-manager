@@ -1,0 +1,15 @@
+MEMORIAL MANAGER - LICENZA PROPRIETARIA
+
+Copyright © 2026 Michele Basilici. Tutti i diritti riservati.
+
+Il presente software, inclusi codice sorgente, interfaccia, struttura, componenti e documentazione, è di titolarità di Michele Basilici.
+
+Il software è concesso in uso alla Comitiva 13 Agosto esclusivamente per la gestione del Memorial Giuliano Di Donato, salvo diverso accordo scritto.
+
+La presente concessione non trasferisce alcun diritto di proprietà sul software. È vietato copiare, modificare, distribuire, vendere, cedere, sublicenziare, pubblicare o utilizzare il software, in tutto o in parte, per finalità diverse da quelle autorizzate, senza il preventivo consenso scritto dell'autore.
+
+Il software è fornito nello stato in cui si trova, senza garanzie ulteriori rispetto a quelle eventualmente concordate per iscritto.
+
+Autore e titolare:
+Michele Basilici
+LinkedIn: https://www.linkedin.com/in/michele-basilici-98a353269/
