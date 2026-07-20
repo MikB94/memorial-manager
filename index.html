@@ -415,6 +415,43 @@ tbody tr:hover td{background:rgba(255,255,255,.025)}
 <style id="memorial-manager-public-signature">
 .mm-public-footer{margin:28px auto 90px;padding:22px 16px 0;max-width:1180px;text-align:center;border-top:1px solid rgba(242,193,78,.14);color:#6f7d92;font:600 10px/1.7 Segoe UI,Arial,sans-serif;letter-spacing:.04em}.mm-public-footer strong{color:#9d8959;font-weight:850}.mm-public-footer a{color:#b89b55;text-decoration:none}.mm-public-footer a:hover{color:#f2c14e}@media(max-width:800px){.mm-public-footer{margin-bottom:92px;padding-left:12px;padding-right:12px}}
 </style>
+
+<style id="team-calendar-feature">
+.team-clickable{cursor:pointer;transition:transform .18s ease,border-color .18s ease,background .18s ease}
+.team-clickable:hover{transform:translateY(-2px);border-color:rgba(242,193,78,.45)!important;background:rgba(242,193,78,.07)!important}
+.team-clickable:focus-visible{outline:2px solid #f2c14e;outline-offset:3px}
+.team-calendar-modal .modal-box{width:min(920px,96vw)}
+.team-calendar-hero{display:grid;grid-template-columns:110px 1fr;gap:18px;align-items:center;padding:16px;border:1px solid rgba(242,193,78,.22);border-radius:18px;background:radial-gradient(circle at 95% 0,rgba(242,193,78,.14),transparent 35%),linear-gradient(150deg,rgba(15,36,70,.98),rgba(5,13,29,.99))}
+.team-calendar-poster{width:100px;height:140px;border-radius:13px;overflow:hidden;border:1px solid rgba(242,193,78,.35);background:#050c18}.team-calendar-poster img{width:100%;height:100%;object-fit:contain}
+.team-calendar-hero h2{margin:0 0 5px;font-size:30px}.team-calendar-meta{color:#aebbd0;font-weight:800}.team-calendar-counts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.team-calendar-counts span{padding:7px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.035);font-size:11px;font-weight:900;color:#dce4f1}
+.team-calendar-section{margin-top:18px}.team-calendar-section h3{margin:0 0 10px;color:#ffe49a;font-size:17px}.team-fixtures{display:grid;gap:8px}.team-fixture{display:grid;grid-template-columns:120px minmax(0,1fr) 84px;align-items:center;gap:12px;padding:12px 13px;border:1px solid rgba(255,255,255,.09);border-radius:14px;background:linear-gradient(155deg,rgba(12,29,57,.96),rgba(5,13,29,.98));cursor:pointer}.team-fixture:hover{border-color:rgba(242,193,78,.35)}.team-fixture-date{font-size:11px;color:#aebbd0;font-weight:850}.team-fixture-main strong{display:block;font-size:15px}.team-fixture-main small{display:block;color:#8999b1;margin-top:4px}.team-fixture-score{text-align:center;color:#ffe49a;font-size:18px;font-weight:1000}.team-fixture-score small{display:block;color:#9aa8bd;font-size:9px;text-transform:uppercase;letter-spacing:.06em;margin-top:3px}.mm-public-footer .legal-links{margin-top:7px}.mm-public-footer .legal-links a{margin:0 6px}
+@media(max-width:650px){.team-calendar-hero{grid-template-columns:76px 1fr;padding:12px}.team-calendar-poster{width:70px;height:100px}.team-calendar-hero h2{font-size:23px}.team-fixture{grid-template-columns:78px minmax(0,1fr) 60px;gap:8px;padding:10px}.team-fixture-date{font-size:10px}.team-fixture-main strong{font-size:13px}.team-fixture-score{font-size:16px}}
+</style>
+
+
+<style id="v15-home-upper-final">
+/* V15 — restyling definitivo della sola parte superiore della Home. */
+.v10-masthead{position:relative;padding-top:24px;padding-bottom:20px}
+.v10-mast-copy h2{font-family:var(--display)!important;font-weight:900!important;line-height:.93!important;letter-spacing:.035em!important}
+.v10-mast-copy h2 span{font:inherit!important;letter-spacing:inherit!important}
+.v15-match-hero{min-height:390px;padding:30px 38px 32px;border-color:rgba(242,193,78,.42);background:radial-gradient(circle at 50% 42%,rgba(242,193,78,.16),transparent 22%),radial-gradient(circle at 15% 50%,rgba(35,93,184,.11),transparent 28%),radial-gradient(circle at 85% 50%,rgba(35,93,184,.11),transparent 28%),linear-gradient(112deg,#020814 0%,#07172d 48%,#020814 100%);box-shadow:0 30px 95px rgba(0,0,0,.52),inset 0 1px rgba(255,255,255,.035)}
+.v15-match-hero:before{background:linear-gradient(90deg,rgba(1,6,15,.88) 0%,rgba(2,8,20,.38) 33%,rgba(2,8,20,.18) 50%,rgba(2,8,20,.38) 67%,rgba(1,6,15,.88) 100%),repeating-linear-gradient(90deg,transparent 0 74px,rgba(255,255,255,.018) 75px 76px),linear-gradient(0deg,transparent 49.6%,rgba(242,193,78,.12) 50%,transparent 50.4%)}
+.v15-match-grid{grid-template-columns:minmax(0,1fr) 180px minmax(0,1fr);gap:24px;margin-top:22px}
+.v15-team-side{display:flex;align-items:center;justify-content:center;gap:24px;min-width:0}
+.v15-team-home{justify-content:flex-start}.v15-team-away{justify-content:flex-end}
+.v15-team-side .hero-team{flex:1;min-width:0;font-family:var(--display);font-size:clamp(38px,5.2vw,72px);line-height:.92;text-shadow:0 10px 34px rgba(0,0,0,.58)}
+.v15-team-home .hero-team{text-align:left}.v15-team-away .hero-team{text-align:right}
+.v15-team-card{flex:0 0 clamp(100px,11vw,158px);height:clamp(150px,17vw,232px);border-radius:18px;overflow:hidden;border:1px solid rgba(242,193,78,.38);background:linear-gradient(160deg,rgba(18,40,72,.9),rgba(3,9,20,.98));box-shadow:0 20px 48px rgba(0,0,0,.48),0 0 32px rgba(242,193,78,.07);transform:translateZ(0)}
+.v15-team-card img{width:100%;height:100%;object-fit:contain;display:block}
+.v15-match-center{position:relative;z-index:2;padding:8px 0}
+.v15-match-center .hero-time{text-shadow:0 0 26px rgba(242,193,78,.25)}
+.v15-match-hero .v10-hero-action{margin-top:22px}
+.v15-match-hero .v10-gold-btn{min-width:230px;padding:15px 26px;box-shadow:0 14px 34px rgba(242,193,78,.28),inset 0 1px rgba(255,255,255,.45)}
+.mm-public-footer .mm-footer-product{margin-top:6px}.mm-public-footer .mm-footer-product strong{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#c7a95e}.mm-public-footer .mm-footer-site{color:#657288}
+@media(max-width:1100px){.v15-team-side{gap:14px}.v15-team-card{flex-basis:110px;height:170px}.v15-team-side .hero-team{font-size:clamp(31px,5vw,54px)}}
+@media(max-width:800px){.v15-match-hero{min-height:320px;padding:20px 14px 22px}.v15-match-grid{grid-template-columns:minmax(0,1fr) 76px minmax(0,1fr);gap:7px}.v15-team-side{display:grid;justify-items:center;gap:8px}.v15-team-home,.v15-team-away{justify-content:center}.v15-team-home .v15-team-card{order:0}.v15-team-home .hero-team{order:1}.v15-team-away .hero-team{order:1}.v15-team-away .v15-team-card{order:0}.v15-team-card{width:72px;height:106px;flex:none;border-radius:11px}.v15-team-side .hero-team,.v15-team-home .hero-team,.v15-team-away .hero-team{text-align:center;font-size:clamp(20px,6.6vw,30px);line-height:.96}.v15-match-center .hero-time{font-size:37px}.v15-match-center .hero-date{font-size:9px}.v15-match-hero .v10-hero-action{margin-top:17px}}
+@media(max-width:430px){.v15-team-card{width:62px;height:92px}.v15-match-grid{grid-template-columns:minmax(0,1fr) 68px minmax(0,1fr)}.v15-team-side .hero-team{font-size:20px}.v15-match-hero .v10-gold-btn{min-width:0;width:100%}}
+</style>
 </head>
 <body>
 <div class="app">
@@ -842,6 +879,8 @@ body{font-family:var(--body)}
   const groupMatches=state.matches.filter(m=>m.stage==='GROUP'),done=groupMatches.filter(m=>m.status==='done').length,total=groupMatches.length||40,assigned=state.teams.filter(t=>t.group).length;
   const now=new Date();
   const next=state.matches.filter(m=>m.status!=='done'&&m.status!=='postponed'&&m.home&&m.away).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))[0];
+  const nextHomeTeam=next?team(next.home):null;
+  const nextAwayTeam=next?team(next.away):null;
   const latest=state.matches.filter(m=>m.status==='done').sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time)).slice(0,3);
   const logoSrc=document.querySelector('.brand img')?.src||'';
   const fallbackEvents=[
@@ -864,7 +903,7 @@ body{font-family:var(--body)}
   const icon=(id)=>typeof svg==='function'?svg(id):'';
   document.getElementById('page-dashboard').innerHTML=`<main class="v10-home">
    <header class="v10-masthead"><img class="v10-mast-logo" src="${logoSrc}" alt="Comitiva 13 Agosto"><div class="v10-mast-copy"><h2><span>XXIV MEMORIAL</span><span>GIULIANO DI DONATO</span></h2></div><div class="v10-year">20<br>26<span>EDIZIONE</span></div></header>
-   <section class="v10-hero"><div class="v10-hero-label">Prossima partita</div>${next?`<div class="v10-hero-grid"><div class="hero-side"><div class="hero-team">${esc(teamName(next.home))}</div></div><div class="hero-center"><div class="hero-group">${next.stage==='GROUP'?'Girone '+next.group:'Fase finale'}</div><div class="hero-time">${next.time}</div><div class="hero-date">${fmtDate(next.date)}</div><div class="hero-vs">VS</div></div><div class="hero-side"><div class="hero-team">${esc(teamName(next.away))}</div></div></div><div class="v10-hero-action"><button class="v10-gold-btn" onclick="showPage('calendar')">Vedi calendario ›</button></div>`:`<div class="next-none" style="text-align:center;margin-top:70px">Calendario in aggiornamento.</div>`}</section>
+   <section class="v10-hero v15-match-hero"><div class="v10-hero-label">Prossima partita</div>${next?`<div class="v10-hero-grid v15-match-grid"><div class="hero-side v15-team-side v15-team-home">${nextHomeTeam?.img?`<div class="v15-team-card"><img src="${nextHomeTeam.img}" alt="Card ${esc(teamName(next.home))}" loading="eager" decoding="async"></div>`:''}<div class="hero-team">${esc(teamName(next.home))}</div></div><div class="hero-center v15-match-center"><div class="hero-group">${next.stage==='GROUP'?'Girone '+next.group:'Fase finale'}</div><div class="hero-time">${next.time}</div><div class="hero-date">${fmtDate(next.date)}</div><div class="hero-vs">VS</div></div><div class="hero-side v15-team-side v15-team-away"><div class="hero-team">${esc(teamName(next.away))}</div>${nextAwayTeam?.img?`<div class="v15-team-card"><img src="${nextAwayTeam.img}" alt="Card ${esc(teamName(next.away))}" loading="eager" decoding="async"></div>`:''}</div></div><div class="v10-hero-action"><button class="v10-gold-btn" onclick="showPage('calendar')">Vedi calendario ›</button></div>`:`<div class="next-none" style="text-align:center;margin-top:70px">Calendario in aggiornamento.</div>`}</section>
    <section><div class="v10-kicker">In evidenza</div><div class="v10-stats"><article class="v10-stat" style="--blob:rgba(242,193,78,.16)"><span class="v10-stat-icon">♙</span><span class="v10-stat-label">Squadre</span><strong class="v10-stat-value">${assigned}/20</strong></article><article class="v10-stat" style="--blob:rgba(68,153,255,.18)"><span class="v10-stat-icon">◉</span><span class="v10-stat-label">Partite giocate</span><strong class="v10-stat-value">${done}/${total}</strong></article><article class="v10-stat" style="--blob:rgba(152,93,255,.18)"><span class="v10-stat-icon">▦</span><span class="v10-stat-label">Gironi</span><strong class="v10-stat-value">4</strong></article><article class="v10-stat" style="--blob:rgba(49,190,152,.18)"><span class="v10-stat-icon">♛</span><span class="v10-stat-label">Finale</span><strong class="v10-stat-value">12/08</strong></article></div></section>
    <section><div class="v10-kicker">Scopri il torneo</div><div class="v10-links"><button class="v10-link" onclick="showPage('calendar')">${icon('calendar')}<span><strong>Calendario</strong><small>Orari e partite</small></span><b class="v10-arrow">›</b></button><button class="v10-link" onclick="showPage('results')">${icon('results')}<span><strong>Risultati</strong><small>Risultati e dettagli</small></span><b class="v10-arrow">›</b></button><button class="v10-link" onclick="showPage('standings')">${icon('standings')}<span><strong>Classifiche</strong><small>Classifiche e statistiche</small></span><b class="v10-arrow">›</b></button><button class="v10-link" onclick="showPage('teams')">${icon('teams')}<span><strong>Squadre e gironi</strong><small>Le protagoniste del Memorial</small></span><b class="v10-arrow">›</b></button></div></section>
    ${nextEvent?`<section><div class="v10-kicker">Prossimo evento</div><div class="v10-countdown" id="eventCountdown" data-event-date="${nextEvent.dateTime}" style="--event:${nextEvent.color}"><div><div class="v10-event-date">${nextEvent.dateLabel}</div><div class="v10-event-name">${esc(nextEvent.name)}</div><div class="v10-event-copy">${esc(nextEvent.copy)}</div></div><div class="v10-cd-boxes"><div class="v10-cd"><b data-cd="days">--</b><span>giorni</span></div><div class="v10-cd"><b data-cd="hours">--</b><span>ore</span></div><div class="v10-cd"><b data-cd="minutes">--</b><span>minuti</span></div></div></div></section>`:''}
@@ -949,9 +988,52 @@ body{font-family:var(--body)}
 </script>
 
 
-<footer class="mm-public-footer" aria-label="Crediti software">
-  <div>© 2026 Comitiva 13 Agosto</div>
-  <div><strong>Powered by Memorial Manager</strong> · Software sviluppato da <a href="https://www.linkedin.com/in/michele-basilici-98a353269/" target="_blank" rel="noopener noreferrer">Michele Basilici</a></div>
+
+<div class="modal team-calendar-modal" id="teamCalendarModal" aria-hidden="true"><div class="modal-box"><div class="modal-head"><h2>Calendario squadra</h2><button class="btn" onclick="closeTeamCalendar()">CHIUDI</button></div><div id="teamCalendarBody"></div></div></div>
+
+
+<script id="team-calendar-feature-js">
+(function(){
+ function teamMatches(teamId){
+   return (state.matches||[]).filter(m=>m.home===teamId||m.away===teamId).sort((a,b)=>(a.date+' '+a.time).localeCompare(b.date+' '+b.time));
+ }
+ function statusLabel(m){return m.status==='done'?'Terminata':m.status==='live'?'In corso':m.status==='postponed'?'Rinviata':'Da giocare'}
+ function fixtureHtml(m,teamId){
+   const opponent=m.home===teamId?m.away:m.home;
+   const r=matchResult(m);
+   const score=m.status==='done'?(m.home===teamId?r.hs+'–'+r.as:r.as+'–'+r.hs):m.status==='live'?'LIVE':'VS';
+   return `<div class="team-fixture" role="button" tabindex="0" onclick="closeTeamCalendar();openReadOnlyMatch('${m.id}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}"><div class="team-fixture-date">${fmtDate(m.date)}<br>${m.time}</div><div class="team-fixture-main"><strong>${esc(teamName(opponent))}</strong><small>${m.stage==='GROUP'?'Girone '+m.group:m.stage}</small></div><div class="team-fixture-score">${score}<small>${statusLabel(m)}</small></div></div>`;
+ }
+ window.openTeamCalendar=function(teamId){
+   const t=team(teamId);if(!t)return;
+   const all=teamMatches(teamId),past=all.filter(m=>m.status==='done'),upcoming=all.filter(m=>m.status!=='done');
+   const img=t.img?`<img src="${t.img}" alt="${esc(t.name)}">`:'';
+   document.getElementById('teamCalendarBody').innerHTML=`<div class="team-calendar-hero"><div class="team-calendar-poster">${img}</div><div><h2>${esc(t.name)}</h2><div class="team-calendar-meta">Girone ${t.group||'—'}</div><div class="team-calendar-counts"><span>${all.length} partite</span><span>${past.length} concluse</span><span>${upcoming.length} da giocare</span></div></div></div><section class="team-calendar-section"><h3>Prossime partite</h3><div class="team-fixtures">${upcoming.length?upcoming.map(m=>fixtureHtml(m,teamId)).join(''):'<div class="empty">Nessuna partita in programma.</div>'}</div></section><section class="team-calendar-section"><h3>Risultati precedenti</h3><div class="team-fixtures">${past.length?past.slice().reverse().map(m=>fixtureHtml(m,teamId)).join(''):'<div class="empty">Nessun risultato disponibile.</div>'}</div></section>`;
+   const modal=document.getElementById('teamCalendarModal');modal.classList.add('show');modal.setAttribute('aria-hidden','false');
+ };
+ window.closeTeamCalendar=function(){const modal=document.getElementById('teamCalendarModal');modal.classList.remove('show');modal.setAttribute('aria-hidden','true')};
+ const originalTeams=window.renderTeams;
+ window.renderTeams=function(){
+   originalTeams();
+   document.querySelectorAll('#page-teams .team-row-premium').forEach((el,i)=>{const id=[...state.teams.filter(t=>t.group)].find(t=>t.name===el.querySelector('strong')?.textContent)?.id; if(id){el.classList.add('team-clickable');el.tabIndex=0;el.setAttribute('role','button');el.onclick=()=>openTeamCalendar(id);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openTeamCalendar(id)}}}});
+   document.querySelectorAll('#page-teams .all-team-chip').forEach(el=>{const name=el.querySelector('b')?.textContent;const t=state.teams.find(x=>x.name===name);if(t){el.classList.add('team-clickable');el.tabIndex=0;el.setAttribute('role','button');el.onclick=()=>openTeamCalendar(t.id);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openTeamCalendar(t.id)}}}});
+ };
+ const originalStandings=window.renderStandings;
+ window.renderStandings=function(){
+   originalStandings();
+   document.querySelectorAll('#page-standings .standing-row').forEach(el=>{const name=el.querySelector('.standing-team')?.textContent;const t=state.teams.find(x=>x.name===name);if(t){el.classList.add('team-clickable');el.tabIndex=0;el.setAttribute('role','button');el.onclick=()=>openTeamCalendar(t.id);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openTeamCalendar(t.id)}}}});
+ };
+ document.getElementById('teamCalendarModal')?.addEventListener('click',e=>{if(e.target.id==='teamCalendarModal')closeTeamCalendar()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('teamCalendarModal')?.classList.contains('show'))closeTeamCalendar()});
+ setTimeout(()=>{if(document.getElementById('page-teams')?.classList.contains('active'))window.renderTeams();if(document.getElementById('page-standings')?.classList.contains('active'))window.renderStandings()},250);
+})();
+</script>
+
+<footer class="mm-public-footer" aria-label="Crediti e informazioni legali">
+  <div class="mm-footer-site">© 2026 Comitiva 13 Agosto</div>
+  <div class="mm-footer-product"><strong>Memorial Manager</strong></div>
+  <div>© 2026 <a href="https://www.linkedin.com/in/michele-basilici-98a353269/" target="_blank" rel="noopener noreferrer">Michele Basilici</a>. All rights reserved.</div>
+  <div class="legal-links"><a href="privacy.html">Privacy Policy</a> · <a href="note-legali.html">Legal Notice</a></div>
 </footer>
 
 </body>
