@@ -594,7 +594,7 @@ function openReadOnlyMatch(id){
  document.getElementById('matchModal').classList.add('show')
 }
 function closeMatchModal(){document.getElementById('matchModal').classList.remove('show')}
-let publicUpdatedAt=null,publicImages={};
+let publicUpdatedAt=null,publicImages={t1:'t1.webp',t2:'t2.webp',t3:'t3.webp',t4:'t4.webp',t5:'t5.webp',t6:'t6.webp',t7:'t7.webp',t8:'t8.webp',t9:'t9.webp',t10:'t10.webp',t11:'t11.webp',t12:'t12.webp',t13:'t13.webp',t14:'t14.webp',t15:'t15.webp',t16:'t16.webp',t17:'t17.webp',t18:'t18.webp',t19:'t19.webp',t20:'t20.webp'};
 function mergePublicImages(data){
  const normalized=normalize(data);
  normalized.teams=normalized.teams.map(t=>({...t,img:t.img||publicImages[t.id]||''}));
@@ -607,16 +607,8 @@ async function writePublicCache(key,value){
  try{const db=await openDB();return await new Promise((res,rej)=>{const tx=db.transaction(STORE,'readwrite');tx.objectStore(STORE).put(value,key);tx.oncomplete=res;tx.onerror=()=>rej(tx.error)})}catch{}
 }
 async function loadLegacyImages(){
- const cached=await readPublicCache('public_images_v1');
- if(cached&&typeof cached==='object')publicImages=cached;
- if(Object.keys(publicImages).length)return;
- const {data,error}=await supabaseClient.from('tournament_state').select('data').eq('id','main').maybeSingle();
- if(error||!data?.data)return;
- try{
-  const legacy=normalize(data.data);
-  publicImages=Object.fromEntries(legacy.teams.filter(t=>t.img).map(t=>[t.id,t.img]));
-  await writePublicCache('public_images_v1',publicImages);
- }catch{}
+ // Le card sono file statici nella root del sito: t1.webp ... t20.webp.
+ return;
 }
 async function fetchLightState(showToast=false){
  const badge=document.getElementById('saveState');if(badge)badge.textContent='Aggiornamento…';
@@ -633,10 +625,8 @@ async function loadPublicState(showToast=false){
  await loadLegacyImages();
  if(await fetchLightState(showToast))return;
  const badge=document.getElementById('saveState');
- const {data,error}=await supabaseClient.from('tournament_state').select('data,updated_at').eq('id','main').maybeSingle();
- if(error){if(badge)badge.textContent='Errore dati';if(showToast)toast('Errore caricamento: '+error.message);return}
- if(!data){if(badge)badge.textContent='Nessun dato pubblicato';if(showToast)toast('Nessun aggiornamento ancora pubblicato');return}
- try{state=normalize(data.data);publicUpdatedAt=data.updated_at||state.updatedAt||null;renderAll();const d=new Date(publicUpdatedAt);if(badge)badge.textContent='Aggiornato '+d.toLocaleString('it-IT',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});if(showToast)toast('Dati aggiornati')}catch(e){if(badge)badge.textContent='Dati non validi'}
+ if(badge)badge.textContent='Nessun dato pubblicato';
+ if(showToast)toast('Nessun aggiornamento disponibile');
 }
 async function checkPublicUpdate(){
  const {data,error}=await supabaseClient.from('tournament_state').select('updated_at').eq('id','live_state').maybeSingle();
